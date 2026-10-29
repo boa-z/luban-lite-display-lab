@@ -1,0 +1,5 @@
+Luban-Lite Display Lab
+Copyright 2026 the luban-lite-display-lab contributors.
+
+Built against, not copied: the Luban-Lite SDK packages lvgl-ui (LVGL 9.1, MIT) and mpp (Apache-2.0).
+The tools were moved from the luban-lite-hmi Framework (Apache-2.0).

@@ -1,0 +1,35 @@
+menu "Luban-Lite Display Lab"
+comment "Display Lab needs the SDK MPP framebuffer API (LPKG_MPP)"
+    depends on !LPKG_MPP
+
+config AIC_DISPLAY_LAB_COLOR
+    bool "hmi_color: live display-engine gamma and CCM tuning"
+    default y
+    depends on LPKG_MPP
+    help
+      Shell command that prints and changes the display-engine gamma and CCM tables. Changes
+      are RAM-only; "hmi_color ccm reset" restores the table the display had when the command
+      first ran (the application's boot configuration).
+config AIC_DISPLAY_LAB_TESTCARD
+    bool "hmi_testcard: LVGL colour test card on the top layer"
+    default y
+    depends on LPKG_MPP && LPKG_USING_LVGL && LVGL_V_9
+    help
+      Grid and single-colour patches drawn on lv_layer_top() of the SDK LVGL display. The
+      application keeps running underneath and returns unchanged after "hmi_testcard off".
+config AIC_DISPLAY_LAB_TESTCARD_EXTRA
+    string "Extra test-card presets (RRGGBB hex, space separated)"
+    default ""
+    depends on AIC_DISPLAY_LAB_TESTCARD
+    help
+      Up to 16 colours appended after the 13 built-in presets, for example the key colours of
+      the UI under test: "0x33AA55 0xEE7700 0xDD2222".
+config AIC_DISPLAY_LAB_BENCH
+    bool "hmi_display: hand the screen to the official AiPQ tool"
+    default y
+    depends on LPKG_MPP && LPKG_USING_LVGL && LVGL_V_9
+    help
+      Pauses LVGL drawing and pointer input and selects framebuffer 0 so that AiPQ Pure Color,
+      Gradient and test_fb -b patterns stay stable; "hmi_display resume" redraws the whole
+      screen. The SDK test commands (AIC_MPP_FB_TEST, AIC_DISPLAY_TEST) are separate options.
+endmenu
